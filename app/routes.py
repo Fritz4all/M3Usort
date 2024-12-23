@@ -54,7 +54,7 @@ CONFIG_PATH = os.path.join(CURRENT_DIR, '..', 'config.py')
 CONFIG_PATH = os.path.normpath(CONFIG_PATH)
 BASE_DIR = os.path.dirname(CONFIG_PATH)
 
-RUNNING_AS_SERVICE = 0
+#RUNNING_AS_SERVICE = 0
 
 # Global security settings
 MUST_CHANGE_PW = 0
@@ -79,8 +79,8 @@ PLAYLIST_LAST_ATTEMPT_TIME = None
 
 
 @app.context_processor
-def inject_globals():
-    return dict(RUNNING_AS_SERVICE=RUNNING_AS_SERVICE, UPDATE_AVAILABLE=UPDATE_AVAILABLE)
+#def inject_globals():
+#    return dict(RUNNING_AS_SERVICE=RUNNING_AS_SERVICE, UPDATE_AVAILABLE=UPDATE_AVAILABLE)
 
 @app.route('/restart', methods=['GET', 'POST'])
 def restart():
@@ -1632,7 +1632,7 @@ def startup_instant():
 
     if check_password_hash(hashed_admin_pw_from_config, "IPTV") or check_password_hash(hashed_playlist_pw_from_config, "IPTV"):
         MUST_CHANGE_PW = 1
-    running_as_service()
+#    running_as_service()
 
 def PrintLog(string, type):
     if type == "DEBUG":
@@ -1776,22 +1776,22 @@ def update():
 
     return "OK"
 
-def running_as_service():
-    service_name = "M3Usort.service"
-    global RUNNING_AS_SERVICE
-    try:
-        result = subprocess.run(['systemctl', 'is-active', service_name],
-                                stdout=subprocess.PIPE, 
-                                stderr=subprocess.PIPE,
-                                check=False)  # Use check=False to avoid raising an exception on non-zero exit codes
-        # Set RUNNING_AS_SERVICE based on the command output
-        if result.stdout.decode('utf-8').strip() == 'active':
-            RUNNING_AS_SERVICE = 1
-        else:
-            RUNNING_AS_SERVICE = 0
-    except subprocess.SubprocessError as e:
-        print(f"Failed to check service status: {e}")
-        RUNNING_AS_SERVICE = 0
+#def running_as_service():
+#    service_name = "M3Usort.service"
+#    global RUNNING_AS_SERVICE
+#    try:
+#        result = subprocess.run(['systemctl', 'is-active', service_name],
+#                                stdout=subprocess.PIPE, 
+#                                stderr=subprocess.PIPE,
+#                                check=False)  # Use check=False to avoid raising an exception on non-zero exit codes
+#        # Set RUNNING_AS_SERVICE based on the command output
+#        if result.stdout.decode('utf-8').strip() == 'active':
+#            RUNNING_AS_SERVICE = 1
+#        else:
+#            RUNNING_AS_SERVICE = 0
+#    except subprocess.SubprocessError as e:
+#        print(f"Failed to check service status: {e}")
+#        RUNNING_AS_SERVICE = 0
 
 ###################################################
 # Emulate functions
